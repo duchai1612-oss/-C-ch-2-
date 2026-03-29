@@ -3,234 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Russian Grammar Game - Genitive Case</title>
+    <title>Học Tiếng Nga: Cách 2 - Genitive Case</title>
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --danger: #e74c3c;
-            --light: #f8f9fa;
+            --primary: #1a73e8;
+            --secondary: #fbbc04;
+            --success: #34a853;
+            --danger: #ea4335;
+            --bg: #f8f9fa;
+            --dark: #202124;
         }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eef2f7;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            width: 90%;
-            max-width: 650px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        .progress-bar {
-            height: 10px;
-            background: #ddd;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        #progress {
-            height: 100%;
-            background: var(--secondary);
-            width: 0%;
-            transition: 0.4s;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            color: var(--primary);
-            margin-bottom: 25px;
-            padding: 20px;
-            background: var(--light);
-            border-left: 5px solid var(--secondary);
-            border-radius: 5px;
-        }
-        .options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-        .option-btn {
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.2s;
-            text-align: left;
-        }
-        .option-btn:hover {
-            border-color: var(--secondary);
-            background-color: #f0f7ff;
-        }
-        .correct {
-            background-color: var(--success) !important;
-            color: white;
-            border-color: var(--success) !important;
-        }
-        .wrong {
-            background-color: var(--danger) !important;
-            color: white;
-            border-color: var(--danger) !important;
-        }
-        #result-screen {
-            text-align: center;
-            display: none;
-        }
-        .btn-restart {
-            padding: 12px 30px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: var(--dark); }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        
+        /* Section Styling */
+        section { background: white; border-radius: 12px; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        h2 { color: var(--primary); border-bottom: 2px solid var(--bg); pb: 10px; margin-top: 0; }
+
+        /* Bảng quy tắc */
+        .rule-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .rule-table th, .rule-table td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        .rule-table th { background: #f1f3f4; }
+        .highlight { color: var(--danger); font-weight: bold; }
+
+        /* Mini Game Styling */
+        .game-box { background: #fffde7; border: 2px dashed var(--secondary); border-radius: 10px; padding: 20px; text-align: center; }
+        .word-card { display: inline-block; padding: 15px 25px; background: var(--primary); color: white; border-radius: 8px; font-size: 1.5rem; margin-bottom: 20px; }
+        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .btn-opt { padding: 12px; border: 2px solid var(--primary); border-radius: 8px; background: white; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .btn-opt:hover { background: var(--primary); color: white; }
+        
+        .feedback { margin-top: 15px; font-weight: bold; height: 24px; }
+        .score-board { font-size: 1.1rem; color: var(--primary); margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<div class="container" id="game-container">
-    <h1>Игра: Родительный падеж</h1>
-    <div class="progress-bar">
-        <div id="progress"></div>
-    </div>
-    
-    <div id="quiz-screen">
-        <div class="question-text" id="question">Загрузка câu hỏi...</div>
-        <div class="options" id="options"></div>
-    </div>
+<header>
+    <h1>🇷🇺 Trung Tâm Học Tập Tiếng Nga</h1>
+    <p>Chủ đề: Cách 2 với Tính từ (Родительный падеж)</p>
+</header>
 
-    <div id="result-screen">
-        <h2>Конец игры!</h2>
-        <p id="score-text"></p>
-        <button class="btn-restart" onclick="location.reload()">Играть снова</button>
-    </div>
+<div class="container">
+    <section>
+        <h2>1. Ôn tập kiến thức (Grammar Notes)</h2>
+        <p>Trong cấu trúc <b>У кого...?</b> và <b>Нет кого/чего?</b>, tính từ biến đổi đuôi như sau:</p>
+        <table class="rule-table">
+            <tr>
+                <th>Giống</th>
+                <th>Cách 1 (Nguyên thể)</th>
+                <th>Cách 2 (Biến đổi)</th>
+                <th>Ví dụ</th>
+            </tr>
+            <tr>
+                <td><b>Đực / Trung</b></td>
+                <td>-ый / -ий / -ое</td>
+                <td><span class="highlight">-ого / -его</span></td>
+                <td>Нов<b>ого</b>, Син<b>его</b></td>
+            </tr>
+            <tr>
+                <td><b>Cái</b></td>
+                <td>-ая / -яя</td>
+                <td><span class="highlight">-ой / -ей</span></td>
+                <td>Красив<b>ой</b>, Син<b>ей</b></td>
+            </tr>
+        </table>
+    </section>
+
+    <section>
+        <h2>2. Game 1: Phản xạ nhanh (Quick Flash)</h2>
+        <p>Chọn dạng đúng của từ trong ngoặc để hoàn thành cụm <b>"У ..."</b></p>
+        <div class="game-box">
+            <div class="score-board">Điểm của bạn: <span id="score">0</span></div>
+            <div class="word-card" id="current-word">У (старый друг)</div>
+            <div class="options" id="game-options">
+                </div>
+            <div class="feedback" id="feedback"></div>
+        </div>
+    </section>
+
+    <section>
+        <h2>3. Game 2: Thử thách đuôi từ (Suffix Master)</h2>
+        <p>Dưới đây là một danh từ đã chia Cách 2, hãy chọn đúng "Đuôi tính từ" đi kèm:</p>
+        <div class="game-box" style="background: #e8f5e9; border-color: var(--success);">
+            <div class="word-card" id="target-noun" style="background: var(--success);">... дедушки</div>
+            <div class="options" id="suffix-options">
+                </div>
+            <div class="feedback" id="feedback-2"></div>
+        </div>
+    </section>
 </div>
 
 <script>
-    const questions = [
-        {
-            q: "У (этот маленький ребёнок) есть новая игрушка.",
-            options: ["этого маленького ребёнка", "этому маленькому ребёнку", "этом маленьком ребёнке", "этого маленький ребёнок"],
-            correct: 0
-        },
-        {
-            q: "У неё нет (синяя ручка).",
-            options: ["синюю ручку", "синей ручка", "синей ручки", "синюю ручки"],
-            correct: 2
-        },
-        {
-            q: "В центре города нет (большой театр).",
-            options: ["большой театр", "большого театра", "большом театре", "большому театру"],
-            correct: 1
-        },
-        {
-            q: "У (твоя лучшая подруга) есть интересная книга?",
-            options: ["твою лучшую подругу", "твоей лучшей подруге", "твоей лучшей подруги", "твоя лучшая подруга"],
-            correct: 2
-        },
-        {
-            q: "У (наш старый дедушка) болит голова.",
-            options: ["нашей старой дедушки", "нашего старого дедушки", "нашему старому дедушке", "нашего старого дедушка"],
-            correct: 1
-        },
-        {
-            q: "У (наша новая соседка) есть маленькая собака.",
-            options: ["нашей новой соседки", "наша новая соседка", "нашей новую соседку", "нашего нового соседки"],
-            correct: 0
-        },
-        {
-            q: "В этом магазине нет (вкусный торт).",
-            options: ["вкусный торт", "вкусным тортом", "вкусного торта", "вкусном торте"],
-            correct: 2
-        },
-        {
-            q: "Найдите ошибку: У русского студента нет (интересную книгу).",
-            options: ["интересная книга", "интересной книги", "интересную книга", "интересном книге"],
-            correct: 1
-        },
-        {
-            q: "У (каждый иностранный студент) есть паспорт.",
-            options: ["каждого иностранного студента", "каждому иностранному студенту", "каждом иностранном студенте", "каждого иностранный студент"],
-            correct: 0
-        },
-        {
-            q: "У (эта молодая женщина) есть красивая сумка.",
-            options: ["эту молодую женщину", "этой молодой женщины", "этой молодая женщина", "этой молодой женщине"],
-            correct: 1
-        }
+    // Dữ liệu Game 1
+    const game1Data = [
+        { q: "У (сильный спортсмен)", options: ["сильного спортсмена", "сильному спортсмену"], correct: 0 },
+        { q: "У (добрая мама)", options: ["доброй маме", "доброй мамы"], correct: 1 },
+        { q: "У (младший брат)", options: ["младшего брата", "младшим братом"], correct: 0 },
+        { q: "У (синее море)", options: ["синего моря", "синим морем"], correct: 0 },
+        { q: "У (русская подруга)", options: ["русской подруги", "русскую подругу"], correct: 0 }
     ];
 
-    let currentIdx = 0;
+    // Dữ liệu Game 2
+    const game2Data = [
+        { q: "... интересного", n: "фильма", opts: ["-ого", "-ое", "-ой"], ans: "-ого" },
+        { q: "... хорошей", n: "погоды", opts: ["-ая", "-ей", "-ой"], ans: "-ой" },
+        { q: "... большого", n: "окна", opts: ["-ое", "-ого", "-ым"], ans: "-ого" }
+    ];
+
     let score = 0;
+    let currentG1 = 0;
 
-    const questionEl = document.getElementById('question');
-    const optionsEl = document.getElementById('options');
-    const progressEl = document.getElementById('progress');
-    const quizScreen = document.getElementById('quiz-screen');
-    const resultScreen = document.getElementById('result-screen');
-    const scoreText = document.getElementById('score-text');
-
-    function loadQuestion() {
-        const currentQ = questions[currentIdx];
-        questionEl.innerText = currentQ.q;
-        optionsEl.innerHTML = '';
-        progressEl.style.width = `${(currentIdx / questions.length) * 100}%`;
-
-        currentQ.options.forEach((opt, i) => {
+    // Khởi tạo Game 1
+    function initGame1() {
+        const data = game1Data[currentG1];
+        document.getElementById('current-word').innerText = data.q;
+        const optContainer = document.getElementById('game-options');
+        optContainer.innerHTML = '';
+        
+        data.options.forEach((opt, idx) => {
             const btn = document.createElement('button');
-            btn.className = 'option-btn';
+            btn.className = 'btn-opt';
             btn.innerText = opt;
-            btn.onclick = () => checkAnswer(i, btn);
-            optionsEl.appendChild(btn);
+            btn.onclick = () => {
+                if(idx === data.correct) {
+                    score += 10;
+                    document.getElementById('score').innerText = score;
+                    document.getElementById('feedback').innerText = "✅ Tuyệt vời!";
+                    document.getElementById('feedback').style.color = "var(--success)";
+                    setTimeout(nextG1, 1000);
+                } else {
+                    document.getElementById('feedback').innerText = "❌ Thử lại nhé!";
+                    document.getElementById('feedback').style.color = "var(--danger)";
+                }
+            };
+            optContainer.appendChild(btn);
         });
     }
 
-    function checkAnswer(selectedIdx, btn) {
-        const correctIdx = questions[currentIdx].correct;
-        const allBtns = document.querySelectorAll('.option-btn');
+    function nextG1() {
+        currentG1 = (currentG1 + 1) % game1Data.length;
+        initGame1();
+    }
+
+    // Khởi tạo Game 2
+    let currentG2 = 0;
+    function initGame2() {
+        const data = game2Data[currentG2];
+        document.getElementById('target-noun').innerText = data.q + " " + data.n;
+        const optContainer = document.getElementById('suffix-options');
+        optContainer.innerHTML = '';
         
-        allBtns.forEach(b => b.disabled = true);
-
-        if (selectedIdx === correctIdx) {
-            btn.classList.add('correct');
-            score++;
-        } else {
-            btn.classList.add('wrong');
-            allBtns[correctIdx].classList.add('correct');
-        }
-
-        setTimeout(() => {
-            currentIdx++;
-            if (currentIdx < questions.length) {
-                loadQuestion();
-            } else {
-                showResults();
-            }
-        }, 1500);
+        data.opts.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-opt';
+            btn.innerText = opt;
+            btn.onclick = () => {
+                if(opt === data.ans) {
+                    document.getElementById('feedback-2').innerText = "🎯 Chính xác!";
+                    document.getElementById('feedback-2').style.color = "var(--success)";
+                    setTimeout(() => {
+                        currentG2 = (currentG2 + 1) % game2Data.length;
+                        initGame2();
+                    }, 1000);
+                } else {
+                    document.getElementById('feedback-2').innerText = "⚡ Sai rồi!";
+                    document.getElementById('feedback-2').style.color = "var(--danger)";
+                }
+            };
+            optContainer.appendChild(btn);
+        });
     }
 
-    function showResults() {
-        quizScreen.style.display = 'none';
-        resultScreen.style.display = 'block';
-        progressEl.style.width = '100%';
-        scoreText.innerText = `Вы ответили правильно на ${score} из ${questions.length} вопросов.`;
-    }
-
-    loadQuestion();
+    // Chạy game
+    initGame1();
+    initGame2();
 </script>
 
 </body>
