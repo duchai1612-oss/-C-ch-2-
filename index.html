@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian Grammar Game - Genitive Case</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --light: #f8f9fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            width: 90%;
+            max-width: 650px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        #progress {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: 0.4s;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--light);
+            border-left: 5px solid var(--secondary);
+            border-radius: 5px;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .option-btn {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            text-align: left;
+        }
+        .option-btn:hover {
+            border-color: var(--secondary);
+            background-color: #f0f7ff;
+        }
+        .correct {
+            background-color: var(--success) !important;
+            color: white;
+            border-color: var(--success) !important;
+        }
+        .wrong {
+            background-color: var(--danger) !important;
+            color: white;
+            border-color: var(--danger) !important;
+        }
+        #result-screen {
+            text-align: center;
+            display: none;
+        }
+        .btn-restart {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="game-container">
+    <h1>Игра: Родительный падеж</h1>
+    <div class="progress-bar">
+        <div id="progress"></div>
+    </div>
+    
+    <div id="quiz-screen">
+        <div class="question-text" id="question">Загрузка câu hỏi...</div>
+        <div class="options" id="options"></div>
+    </div>
+
+    <div id="result-screen">
+        <h2>Конец игры!</h2>
+        <p id="score-text"></p>
+        <button class="btn-restart" onclick="location.reload()">Играть снова</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "У (этот маленький ребёнок) есть новая игрушка.",
+            options: ["этого маленького ребёнка", "этому маленькому ребёнку", "этом маленьком ребёнке", "этого маленький ребёнок"],
+            correct: 0
+        },
+        {
+            q: "У неё нет (синяя ручка).",
+            options: ["синюю ручку", "синей ручка", "синей ручки", "синюю ручки"],
+            correct: 2
+        },
+        {
+            q: "В центре города нет (большой театр).",
+            options: ["большой театр", "большого театра", "большом театре", "большому театру"],
+            correct: 1
+        },
+        {
+            q: "У (твоя лучшая подруга) есть интересная книга?",
+            options: ["твою лучшую подругу", "твоей лучшей подруге", "твоей лучшей подруги", "твоя лучшая подруга"],
+            correct: 2
+        },
+        {
+            q: "У (наш старый дедушка) болит голова.",
+            options: ["нашей старой дедушки", "нашего старого дедушки", "нашему старому дедушке", "нашего старого дедушка"],
+            correct: 1
+        },
+        {
+            q: "У (наша новая соседка) есть маленькая собака.",
+            options: ["нашей новой соседки", "наша новая соседка", "нашей новую соседку", "нашего нового соседки"],
+            correct: 0
+        },
+        {
+            q: "В этом магазине нет (вкусный торт).",
+            options: ["вкусный торт", "вкусным тортом", "вкусного торта", "вкусном торте"],
+            correct: 2
+        },
+        {
+            q: "Найдите ошибку: У русского студента нет (интересную книгу).",
+            options: ["интересная книга", "интересной книги", "интересную книга", "интересном книге"],
+            correct: 1
+        },
+        {
+            q: "У (каждый иностранный студент) есть паспорт.",
+            options: ["каждого иностранного студента", "каждому иностранному студенту", "каждом иностранном студенте", "каждого иностранный студент"],
+            correct: 0
+        },
+        {
+            q: "У (эта молодая женщина) есть красивая сумка.",
+            options: ["эту молодую женщину", "этой молодой женщины", "этой молодая женщина", "этой молодой женщине"],
+            correct: 1
+        }
+    ];
+
+    let currentIdx = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById('question');
+    const optionsEl = document.getElementById('options');
+    const progressEl = document.getElementById('progress');
+    const quizScreen = document.getElementById('quiz-screen');
+    const resultScreen = document.getElementById('result-screen');
+    const scoreText = document.getElementById('score-text');
+
+    function loadQuestion() {
+        const currentQ = questions[currentIdx];
+        questionEl.innerText = currentQ.q;
+        optionsEl.innerHTML = '';
+        progressEl.style.width = `${(currentIdx / questions.length) * 100}%`;
+
+        currentQ.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i, btn);
+            optionsEl.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selectedIdx, btn) {
+        const correctIdx = questions[currentIdx].correct;
+        const allBtns = document.querySelectorAll('.option-btn');
+        
+        allBtns.forEach(b => b.disabled = true);
+
+        if (selectedIdx === correctIdx) {
+            btn.classList.add('correct');
+            score++;
+        } else {
+            btn.classList.add('wrong');
+            allBtns[correctIdx].classList.add('correct');
+        }
+
+        setTimeout(() => {
+            currentIdx++;
+            if (currentIdx < questions.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }, 1500);
+    }
+
+    function showResults() {
+        quizScreen.style.display = 'none';
+        resultScreen.style.display = 'block';
+        progressEl.style.width = '100%';
+        scoreText.innerText = `Вы ответили правильно на ${score} из ${questions.length} вопросов.`;
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
